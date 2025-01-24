@@ -13,7 +13,7 @@ def verify_password(plain_password, hashed_password):
 
 if __name__ == "__main__":
     # Example usage
-    password = "my_secure_password"
+    password = input("Enter the password to encrypt: ")
     hashed = hash_password(password)
     print(f"Hashed Password: {hashed}")
 
