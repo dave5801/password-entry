@@ -1,5 +1,17 @@
 import re
 import getpass
+import bcrypt
+
+# Hashing a password
+def hash_password(plain_password):
+    # Generate a salt and hash the password
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(plain_password.encode('utf-8'), salt)
+    return hashed_password
+
+# Verifying a password
+def verify_password(plain_password, hashed_password):
+    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password)
 
 def validate_password(password):
     """
@@ -42,6 +54,11 @@ def create_password():
         # Use getpass to hide the password input in the terminal
         password = getpass.getpass("Enter your password: ")
         confirm_password = getpass.getpass("Confirm your password: ")
+
+        hashed = hash_password(password)
+        is_valid = verify_password(password, hashed)
+        print(f"Hashed Password: {hashed}")
+        print(f"Password is valid: {is_valid}")
 
         if password != confirm_password:
             print("Passwords do not match. Please try again.")
